@@ -334,7 +334,7 @@ local Templates = {
         Glow = true,
         SearchbarSize = UDim2.fromScale(1, 1),
         GlobalSearch = false,
-        CornerRadius = 4,
+        CornerRadius = 11,
         NotifySide = "Right",
         ShowCustomCursor = true,
         Font = Enum.Font.Code,
@@ -9008,7 +9008,7 @@ function Library:CreateWindow(WindowInfo)
                 Collapsed = false
             }
 
-            function Groupbox:AddTabbox(Info)
+            function Groupbox:AddTabbox(Name)
                 local BoxHolder = New("Frame", {
                     AutomaticSize = Enum.AutomaticSize.Y,
                     BackgroundTransparency = 1,
@@ -9293,8 +9293,9 @@ function Library:CreateWindow(WindowInfo)
                     end
                 end
 
-                if Info.Name then
-                    Tab.Tabboxes[Info.Name] = Tabbox
+                Groupbox:Resize()
+                if Name then
+                    Tab.Tabboxes[Name] = Tabbox
                 else
                     table.insert(Tab.Tabboxes, Tabbox)
                 end
