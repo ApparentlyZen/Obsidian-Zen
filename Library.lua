@@ -9007,7 +9007,7 @@ function Library:CreateWindow(WindowInfo)
                     Parent = BoxHolder,
                 })
                 New("UIPadding", {
-                    PaddingBottom = UDim.new(0, 4),
+                    PaddingBottom = UDim.new(0, 1),
                     PaddingTop = UDim.new(0, 4),
                     Parent = BoxHolder,
                 })
