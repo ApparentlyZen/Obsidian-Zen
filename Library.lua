@@ -8329,6 +8329,9 @@ function Library:CreateWindow(WindowInfo)
     --// Window Table \\--
     local Window = {}
 
+    Window.Glow = Glow
+    Window.BackgroundImage = BackgroundImage
+
     local function SetUICorner(UICorner, Corner, HalfCurrent, HalfValue, Value)
         local Current = UICorner[Corner]
         if Current.Offset == 0 and Current.Scale == 0 then
@@ -9198,10 +9201,10 @@ function Library:CreateWindow(WindowInfo)
                             return
                         end
 
-                        TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 49)
+                        TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 52)
 
                         task.defer(function()
-                            Groupbox:Resize(-3)
+                            Groupbox:Resize()
                         end)
                     end
 
@@ -9290,13 +9293,13 @@ function Library:CreateWindow(WindowInfo)
                 return Tabbox
             end
 
-            function Groupbox:Resize(Offset)
+            function Groupbox:Resize()
                 local GroupboxSize
 
                 if self.Collapsed then
                     GroupboxSize = UDim2.new(1, 0, 0, 34)
                 else
-                    GroupboxSize = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 49 + (Offset or 0))
+                    GroupboxSize = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 49)
                 end
 
                 GroupboxLine.Visible = not self.Collapsed
