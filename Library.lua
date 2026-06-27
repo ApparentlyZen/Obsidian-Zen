@@ -8985,7 +8985,7 @@ function Library:CreateWindow(WindowInfo)
                     Parent = GroupboxContainer,
                 })
                 New("UIPadding", {
-                    PaddingBottom = UDim.new(0, 7),
+                    PaddingBottom = UDim.new(0, 0),
                     PaddingLeft = UDim.new(0, 7),
                     PaddingRight = UDim.new(0, 7),
                     PaddingTop = UDim.new(0, 7),
@@ -9215,6 +9215,10 @@ function Library:CreateWindow(WindowInfo)
                         end
 
                         TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 49)
+
+                        task.defer(function()
+                            Groupbox:Resize()
+                        end)
                     end
 
                     function Tab:UpdateCorners()
@@ -9293,7 +9297,6 @@ function Library:CreateWindow(WindowInfo)
                     end
                 end
 
-                Groupbox:Resize()
                 if Name then
                     Tab.Tabboxes[Name] = Tabbox
                 else
