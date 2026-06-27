@@ -8327,10 +8327,10 @@ function Library:CreateWindow(WindowInfo)
     end
 
     --// Window Table \\--
-    local Window = {}
-
-    Window.Glow = Glow
-    Window.BackgroundImage = BackgroundImage
+    local Window = {
+        Glow = Glow,
+        BackgroundImage = BackgroundImage,
+    }
 
     local function SetUICorner(UICorner, Corner, HalfCurrent, HalfValue, Value)
         local Current = UICorner[Corner]
