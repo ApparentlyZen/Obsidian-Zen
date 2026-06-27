@@ -4341,14 +4341,6 @@ do
                 Parent = Base,
             })
 
-            table.insert(
-                Library.Corners,
-                New("UICorner", {
-                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
-                    Parent = Base,
-                })
-            )
-
             return Base, Stroke
         end
 
@@ -5212,14 +5204,6 @@ do
             Color = "OutlineColor",
             Parent = Box,
         })
-
-        table.insert(
-            Library.Corners,
-            New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
-                Parent = Box,
-            })
-        )
 
         function Input:UpdateColors()
             if Library.Unloaded then
@@ -7884,25 +7868,25 @@ end
 function Library:SetBackgroundImageEnabled(State: boolean)
     assert(typeof(State) == "boolean", "Expected boolean for State, got: " .. typeof(State))
 
-    self.Scheme.BackgroundImageEnabled = State
-    self.Window.BackgroundImage.Visible = State
-    self:UpdateColorsUsingRegistry()
+    Library.Scheme.BackgroundImageEnabled = State
+    Library.Window.BackgroundImage.Visible = State
+    Library:UpdateColorsUsingRegistry()
 end
 
 function Library:SetBackgroundImage(Image: string | number)
     assert(typeof(Image) == "string" or typeof(Image) == "number", "Expected string/number for Image, got: " .. typeof(Image))
     
-    self.Scheme.BackgroundImage = Library:GetCustomImage(Image).Url
-    self.Window.BackgroundImage.Image = Library:GetCustomImage(Image).Url
-    self:UpdateColorsUsingRegistry()
+    Library.Scheme.BackgroundImage = Library:GetCustomImage(Image).Url
+    Library.Window.BackgroundImage.Image = Library:GetCustomImage(Image).Url
+    Library:UpdateColorsUsingRegistry()
 end
 
 function Library:SetGlow(State: boolean)
     assert(typeof(State) == "boolean", "Expected boolean for State, got: " .. typeof(State))
 
-    self.Scheme.WindowGlow = State
-    self.Window.Glow.Visible = State
-    self:UpdateColorsUsingRegistry()
+    Library.Scheme.WindowGlow = State
+    Library.Window.Glow.Visible = State
+    Library:UpdateColorsUsingRegistry()
 end
 
 function Library:CreateWindow(WindowInfo)
@@ -8985,7 +8969,7 @@ function Library:CreateWindow(WindowInfo)
                     Parent = GroupboxContainer,
                 })
                 New("UIPadding", {
-                    PaddingBottom = UDim.new(0, 0),
+                    PaddingBottom = UDim.new(0, 7),
                     PaddingLeft = UDim.new(0, 7),
                     PaddingRight = UDim.new(0, 7),
                     PaddingTop = UDim.new(0, 7),
@@ -9217,7 +9201,7 @@ function Library:CreateWindow(WindowInfo)
                         TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 49)
 
                         task.defer(function()
-                            Groupbox:Resize()
+                            Groupbox:Resize(-3)
                         end)
                     end
 
@@ -9306,13 +9290,13 @@ function Library:CreateWindow(WindowInfo)
                 return Tabbox
             end
 
-            function Groupbox:Resize()
+            function Groupbox:Resize(Offset)
                 local GroupboxSize
 
                 if self.Collapsed then
                     GroupboxSize = UDim2.new(1, 0, 0, 34)
                 else
-                    GroupboxSize = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 49)
+                    GroupboxSize = UDim2.new(1, 0, 0, (GroupboxList.AbsoluteContentSize.Y / Library.DPIScale) + 49 + (Offset or 0))
                 end
 
                 GroupboxLine.Visible = not self.Collapsed
