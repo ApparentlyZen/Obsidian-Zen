@@ -9006,11 +9006,6 @@ function Library:CreateWindow(WindowInfo)
                     Padding = UDim.new(0, 6),
                     Parent = BoxHolder,
                 })
-                New("UIPadding", {
-                    PaddingBottom = UDim.new(0, 1),
-                    PaddingTop = UDim.new(0, 4),
-                    Parent = BoxHolder,
-                })
 
                 local TabboxHolder
                 local TabboxButtons
@@ -9201,7 +9196,7 @@ function Library:CreateWindow(WindowInfo)
                             return
                         end
 
-                        TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 52)
+                        TabboxHolder.Size = UDim2.new(1, 0, 0, (List.AbsoluteContentSize.Y / Library.DPIScale) + 49)
 
                         task.defer(function()
                             Groupbox:Resize()
