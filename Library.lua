@@ -10516,6 +10516,10 @@ function Library:CreateWindow(WindowInfo)
     if WindowInfo.EnableCompacting and WindowInfo.SidebarCompacted then
         Window:SetSidebarWidth(WindowInfo.SidebarCompactWidth)
     end
+    
+    -- Correction : S'assurer que le menu est visible au démarrage si AutoShow est activé
+    MainFrame.Visible = WindowInfo.AutoShow
+
     if WindowInfo.AutoShow and not Library.ActiveLoading then
         task.spawn(Library.Toggle)
     end
