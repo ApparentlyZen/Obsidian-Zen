@@ -4705,6 +4705,7 @@ do
         end
 
         Button:UpdateColors()
+        task.wait()
         Groupbox:Resize()
 
         Button.Holder = Holder
@@ -4950,6 +4951,7 @@ do
         end
 
         Toggle:Display()
+        task.wait()
         Groupbox:Resize()
 
         Toggle.TextLabel = Label
@@ -5213,6 +5215,7 @@ do
         end
 
         Toggle:Display()
+        task.wait()
         Groupbox:Resize()
 
         Toggle.TextLabel = Label
@@ -5446,6 +5449,7 @@ do
             Input.TooltipTable.Disabled = Input.Disabled
         end
 
+        task.wait()
         Groupbox:Resize()
 
         Input.Holder = Holder
@@ -5874,6 +5878,7 @@ do
 
         Slider:UpdateColors()
         Slider:Display()
+        task.wait()
         Groupbox:Resize()
 
         Slider.Holder = Holder
@@ -6502,6 +6507,7 @@ do
         Dropdown:UpdateColors()
         Dropdown:Display()
         Dropdown:BuildDropdownList()
+        task.wait()
         Groupbox:Resize()
 
         Dropdown.Holder = Holder
@@ -6982,6 +6988,7 @@ do
             Image.Visible = Visible
 
             Holder.Visible = Image.Visible
+            task.wait()
             Groupbox:Resize()
         end
 
@@ -7119,6 +7126,7 @@ do
             Video.Visible = Visible
 
             Holder.Visible = Video.Visible
+            task.wait()
             Groupbox:Resize()
         end
 
@@ -7219,6 +7227,7 @@ do
             Passthrough.Visible = Visible
 
             Holder.Visible = Passthrough.Visible
+            task.wait()
             Groupbox:Resize()
         end
 
