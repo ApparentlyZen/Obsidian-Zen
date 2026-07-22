@@ -2153,7 +2153,7 @@ function Library:AddDraggableImageButton(...)
     local DraggableImageButton = {}
 
     local Button = New("TextButton", {
-        BackgroundColor3 = "BackgroundColor",
+        BackgroundTransparency = 1,
         Position = UDim2.fromOffset(6, 6),
         Size = UDim2.fromOffset(IconSize + 12, IconSize + 12),
         Text = "",
@@ -2166,7 +2166,7 @@ function Library:AddDraggableImageButton(...)
         AnchorPoint = Vector2.new(0.5, 0.5),
         Position = UDim2.fromScale(0.5, 0.5),
         Size = UDim2.fromOffset(IconSize, IconSize),
-        ImageColor3 = Color3.new(1, 1, 1),
+        ImageColor3 = Color3.fromRGB(255, 255, 255),
         ZIndex = 11,
         Parent = Button,
     })
@@ -2186,7 +2186,6 @@ function Library:AddDraggableImageButton(...)
             })
         )
     end
-    Library:AddOutline(Button)
 
     local DragThreshold = if ExcludeDragging then 0.25 else math.huge
     Button.InputBegan:Connect(function(Input: InputObject)
