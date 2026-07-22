@@ -10463,7 +10463,7 @@ function Library:CreateWindow(WindowInfo)
 
     if Library.IsMobile then
         local DraggableButton = Library:AddDraggableImageButton({
-            Icon = WindowInfo.MobileIcon,
+            Icon = "122765407222246",
             IconSize = 30,
             Callback = function()
                 Library:Toggle()
