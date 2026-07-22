@@ -1085,11 +1085,11 @@ function Library:GiveSignal(Connection: RBXScriptConnection | RBXScriptSignal)
 end
 
 function IsValidCustomIcon(Icon: string)
-    return typeof(Icon) == "string" and (Icon:match("^rbxasset://textures/") or Icon:match("roblox%.com/asset/%?id=") or Icon:match("rbxthumb://type=") or Icon:match("^https?://"))
+    return typeof(Icon) == "string" and (Icon:match("^rbxasset://textures/") or Icon:match("roblox%.com/asset/%?id=") or Icon:match("rbxthumb://type="))
 end
 
 local function IsCustomAssetIcon(Icon: string, IncludeAssetId: boolean)
-    return typeof(Icon) == "string" and (Icon:match("^content://") or Icon:match("^rbxasset://%x+/") or (IncludeAssetId == true and Icon:match("^rbxassetid://")))
+    return typeof(Icon) == "string" and (Icon:match("^content://") or Icon:match("^rbxasset://") or (IncludeAssetId == true and Icon:match("^rbxassetid://")))
 end
 
 type Icon = {
@@ -1131,6 +1131,26 @@ function Library:GetCustomIcon(IconName: string): any
 
     if tonumber(IconName) then
         IconName = string.format("rbxassetid://%s", tostring(IconName))
+    end
+
+    if typeof(IconName) == "string" and IconName:match("^https?://") then
+        if getcustomasset and writefile and game.HttpGet then
+            local FileName = "Obsidian/cache/" .. IconName:gsub("[^%w%.]", "_") .. ".png"
+            if not isfile(FileName) then
+                pcall(function()
+                    if not isfolder("Obsidian") then makefolder("Obsidian") end
+                    if not isfolder("Obsidian/cache") then makefolder("Obsidian/cache") end
+                    writefile(FileName, game:HttpGet(IconName))
+                end)
+            end
+
+            if isfile(FileName) then
+                local Success, AssetId = pcall(getcustomasset, FileName)
+                if Success then
+                    IconName = AssetId
+                end
+            end
+        end
     end
 
     if IsCustomAssetIcon(IconName, true) then
