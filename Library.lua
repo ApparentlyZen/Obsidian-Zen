@@ -1062,7 +1062,7 @@ function Library:GiveSignal(Connection: RBXScriptConnection | RBXScriptSignal)
 end
 
 function IsValidCustomIcon(Icon: string)
-    return typeof(Icon) == "string" and (Icon:match("^rbxasset://textures/") or Icon:match("roblox%.com/asset/%?id=") or Icon:match("rbxthumb://type="))
+    return typeof(Icon) == "string" and (Icon:match("^rbxasset://textures/") or Icon:match("roblox%.com/asset/%?id=") or Icon:match("rbxthumb://type=") or Icon:match("^http"))
 end
 
 local function IsCustomAssetIcon(Icon: string, IncludeAssetId: boolean)
@@ -10327,7 +10327,7 @@ function Library:CreateWindow(WindowInfo)
         end
 
         MainFrame.Visible = Library.Toggled
-        ToggleButton.Visible = not Library.Toggled
+        ToggleButton.Visible = WindowInfo.ShowMobileButtons and not Library.Toggled
 
         if WindowInfo.UnlockMouseWhileOpen then
             ModalElement.Modal = Library.Toggled
@@ -10463,7 +10463,7 @@ function Library:CreateWindow(WindowInfo)
 
     if Library.IsMobile then
         local DraggableButton = Library:AddDraggableImageButton({
-            Icon = "122765407222246",
+            Icon = "https://raw.githubusercontent.com/ApparentlyZen/image-namelessWare/main/165abdd521328d77324b02ce8a77e090_1780162334922.webp",
             IconSize = 30,
             Callback = function()
                 Library:Toggle()
