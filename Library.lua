@@ -2932,10 +2932,13 @@ do
                 SizeConstraint = Enum.SizeConstraint.RelativeYY,
                 Parent = Holder,
             })
-            New("UICorner", {
-                CornerRadius = UDim.new(1, 0),
-                Parent = Checkbox,
-            })
+            table.insert(
+                Library.Corners,
+                New("UICorner", {
+                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                    Parent = Checkbox,
+                })
+            )
             New("UIStroke", {
                 Color = "OutlineColor",
                 Parent = Checkbox,
@@ -4820,10 +4823,13 @@ do
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
             Parent = Button,
         })
-        New("UICorner", {
-            CornerRadius = UDim.new(1, 0),
-            Parent = Checkbox,
-        })
+        table.insert(
+            Library.Corners,
+            New("UICorner", {
+                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                Parent = Checkbox,
+            })
+        )
 
         local CheckboxStroke = New("UIStroke", {
             Color = "OutlineColor",
@@ -5601,15 +5607,21 @@ do
             Parent = Bar,
         })
 
-        New("UICorner", {
-            CornerRadius = UDim.new(1, 0),
-            Parent = Bar,
-        })
+        table.insert(
+            Library.Corners,
+            New("UICorner", {
+                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                Parent = Bar,
+            })
+        )
 
-        New("UICorner", {
-            CornerRadius = UDim.new(1, 0),
-            Parent = Fill,
-        })
+        table.insert(
+            Library.Corners,
+            New("UICorner", {
+                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                Parent = Fill,
+            })
+        )
 
         function Slider:UpdateColors()
             if Library.Unloaded then
@@ -7952,7 +7964,6 @@ function Library:CreateWindow(WindowInfo)
 
     local IsDefaultSearchbarSize = WindowInfo.SearchbarSize == UDim2.fromScale(1, 1)
     local MainFrame
-    local ToggleButton
     local DividerLine
     local TitleHolder
     local WindowTitle
@@ -10462,27 +10473,20 @@ function Library:CreateWindow(WindowInfo)
     end
 
     if Library.IsMobile then
-        local DraggableButton = Library:AddDraggableImageButton({
-            Icon = "122765407222246",
-            IconSize = 30,
-            Callback = function()
-                Library:Toggle()
-            end,
-            ExcludeScaling = true,
-            ExcludeDragging = true
-        })
-        ToggleButton = DraggableButton.Button
+        local ToggleButton = Library:AddDraggableButton("Hide", function()
+            Library:Toggle()
+        end, true, true)
 
         if WindowInfo.MobileButtonsSide == "Right" then
-            ToggleButton.AnchorPoint = Vector2.new(1, 0)
-            ToggleButton.Position = UDim2.new(1, -6, 0, 6)
+            ToggleButton.Button.AnchorPoint = Vector2.new(1, 0)
+            ToggleButton.Button.Position = UDim2.new(1, -6, 0, 6)
         else
-            ToggleButton.AnchorPoint = Vector2.new(0, 0)
-            ToggleButton.Position = UDim2.fromOffset(6, 6)
+            ToggleButton.Button.AnchorPoint = Vector2.new(0, 0)
+            ToggleButton.Button.Position = UDim2.fromOffset(6, 6)
         end
 
         if WindowInfo.ShowMobileButtons == false then
-            ToggleButton.Visible = false
+            ToggleButton.Button.Visible = false
         end
     end
 
