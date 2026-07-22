@@ -551,6 +551,29 @@ local function GetSchemeValue(Index)
     return Library.Scheme[Index]
 end
 
+function Library:GetRichText(Data: any)
+    if typeof(Data) == "string" then return Data end
+    if typeof(Data) ~= "table" then return tostring(Data) end
+    
+    local str = ""
+    for _, item in ipairs(Data) do
+        if typeof(item) == "table" then
+            local text = tostring(item[1])
+            local color = item[2]
+            local c = GetSchemeValue(color) or (typeof(color) == "Color3" and color)
+            
+            if c then
+                str = str .. string.format('<font color="#%s">%s</font>', c:ToHex(), text)
+            else
+                str = str .. text
+            end
+        else
+            str = str .. tostring(item)
+        end
+    end
+    return str
+end
+
 --// Basic Functions \\--
 local function WaitForEvent(Event, Timeout, Condition)
     local Bindable = Instance.new("BindableEvent")
@@ -1376,7 +1399,7 @@ end
 
 function Library:GetTextBounds(Text: string, Font: Font, Size: number, Width: number?): (number, number)
     local Params = Instance.new("GetTextBoundsParams")
-    Params.Text = Text
+    Params.Text = Library:GetRichText(Text)
     Params.RichText = true
     Params.Font = Font
     Params.Size = Size
@@ -7600,10 +7623,10 @@ function Library:Notify(...)
     local Info = select(1, ...)
 
     if typeof(Info) == "table" then
-        Data.Title = tostring(Info.Title)
+        Data.Title = Library:GetRichText(Info.Title)
         Data.TitleColor = Info.TitleColor
 
-        Data.Description = tostring(Info.Description)
+        Data.Description = Library:GetRichText(Info.Description)
         Data.DescriptionColor = Info.DescriptionColor
 
         Data.Time = Info.Time or 5
@@ -7803,7 +7826,7 @@ function Library:Notify(...)
 
     function Data:ChangeTitle(Text)
         if Title then
-            Data.Title = tostring(Text)
+            Data.Title = Library:GetRichText(Text)
             Title.Text = Data.Title
             Data:Resize()
         end
@@ -7811,7 +7834,7 @@ function Library:Notify(...)
 
     function Data:ChangeDescription(Text)
         if Desc then
-            Data.Description = tostring(Text)
+            Data.Description = Library:GetRichText(Text)
             Desc.Text = Data.Description
             Data:Resize()
         end
@@ -8100,12 +8123,12 @@ function Library:CreateWindow(WindowInfo)
             WindowInfo.Title,
             Library.Scheme.Font,
             20,
-            TitleHolder.AbsoluteSize.X - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
+            InitialLeftWidth - (WindowInfo.Icon and WindowInfo.IconSize.X.Offset + 6 or 0) - 12
         )
         WindowTitle = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.new(0, X, 1, 0),
-            Text = WindowInfo.Title,
+            Text = Library:GetRichText(WindowInfo.Title),
             TextSize = 20,
             Parent = TitleHolder,
         })
@@ -8270,7 +8293,7 @@ function Library:CreateWindow(WindowInfo)
         FooterLabel = New("TextLabel", {
             BackgroundTransparency = 1,
             Size = UDim2.fromScale(1, 1),
-            Text = WindowInfo.Footer,
+            Text = Library:GetRichText(WindowInfo.Footer),
             TextSize = 14,
             TextTransparency = 0.5,
             Parent = BottomBar,
@@ -8355,9 +8378,15 @@ function Library:CreateWindow(WindowInfo)
     end
 
     function Window:ChangeTitle(title)
-        assert(typeof(title) == "string", "Expected string for title got: " .. typeof(title))
-
-        WindowTitle.Text = title
+        local formatted = Library:GetRichText(title)
+        local X = Library:GetTextBounds(
+            formatted,
+            Library.Scheme.Font,
+            20,
+            TitleHolder.AbsoluteSize.X - (WindowIcon.Visible and WindowIcon.AbsoluteSize.X + 6 or 0) - 12
+        )
+        WindowTitle.Size = UDim2.new(0, X, 1, 0)
+        WindowTitle.Text = formatted
         WindowInfo.Title = title
     end
 
@@ -8379,9 +8408,8 @@ function Library:CreateWindow(WindowInfo)
     end
 
     function Window:SetFooter(Footer: string)
-        assert(typeof(Footer) == "string", "Expected string for footer got: " .. typeof(Footer))
-
-        FooterLabel.Text = Footer
+        local formatted = Library:GetRichText(Footer)
+        FooterLabel.Text = formatted
         WindowInfo.Footer = Footer
     end
 
@@ -8542,7 +8570,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Name,
+                Text = Library:GetRichText(Name),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
@@ -9599,7 +9627,7 @@ function Library:CreateWindow(WindowInfo)
                 BackgroundTransparency = 1,
                 Position = UDim2.fromOffset(30, 0),
                 Size = UDim2.new(1, -30, 1, 0),
-                Text = Name,
+                Text = Library:GetRichText(Name),
                 TextSize = 16,
                 TextTransparency = 0.5,
                 TextXAlignment = Enum.TextXAlignment.Left,
