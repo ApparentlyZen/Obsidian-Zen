@@ -10326,8 +10326,12 @@ function Library:CreateWindow(WindowInfo)
             Library.Toggled = not Library.Toggled
         end
 
+        Toggled = Library.Toggled
+
         MainFrame.Visible = Library.Toggled
-        ToggleButton.Visible = WindowInfo.ShowMobileButtons and not Library.Toggled
+        if Library.IsMobile then
+            ToggleButton.Visible = WindowInfo.ShowMobileButtons and not Library.Toggled
+        end
 
         if WindowInfo.UnlockMouseWhileOpen then
             ModalElement.Modal = Library.Toggled
