@@ -10515,9 +10515,7 @@ function Library:CreateWindow(WindowInfo)
     end
 
     if Library.IsMobile then
-        local ToggleButton = Library:AddDraggableButton("Hide", function()
-            Library:Toggle()
-        end, true, true)
+        local ToggleButton = Library:AddDraggableImageButton("122765407222246", 30, function() Library:Toggle() end, true, true)
 
         if WindowInfo.MobileButtonsSide == "Right" then
             ToggleButton.Button.AnchorPoint = Vector2.new(1, 0)
