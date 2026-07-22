@@ -218,7 +218,7 @@ local Library = {
     OriginalMinSize = Vector2.new(480, 360),
     MinSize = Vector2.new(480, 360),
     DPIScale = 1,
-    CornerRadius = 4,
+    CornerRadius = 12,
 
     IsLightTheme = false,
     Scheme = {
@@ -326,7 +326,7 @@ local Templates = {
         SearchbarSize = UDim2.fromScale(1, 1),
         GlobalSearch = false,
 
-        CornerRadius = 4,
+        CornerRadius = 12,
         NotifySide = "Right",
         ShowCustomCursor = true,
 
@@ -1793,7 +1793,7 @@ function Library:AddDraggableLabel(...)
     table.insert(
         Library.Corners, 
         New("UICorner", {
-            CornerRadius = UDim.new(0, Library.CornerRadius),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
             Parent = Label,
         })
     )
@@ -2277,8 +2277,8 @@ function Library:AddContextMenu(
     if IgnoreCornerRadius ~= true then
         if SpecificCornersOnly == "top" then
             Corner = New("UICorner", {
-                TopLeftRadius = UDim.new(0, Library.CornerRadius / 2),
-                TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                TopLeftRadius = UDim.new(0, Library.CornerRadius),
+                TopRightRadius = UDim.new(0, Library.CornerRadius),
                 BottomRightRadius = UDim.new(0, 0),
                 BottomLeftRadius = UDim.new(0, 0),
                 Parent = Menu,
@@ -2294,22 +2294,22 @@ function Library:AddContextMenu(
         elseif SpecificCornersOnly == "no_left" then
             Corner = New("UICorner", {
                 TopLeftRadius = UDim.new(0, 0),
-                TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
-                BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                TopRightRadius = UDim.new(0, Library.CornerRadius),
+                BottomRightRadius = UDim.new(0, Library.CornerRadius),
                 BottomLeftRadius = UDim.new(0, 0),
                 Parent = Menu,
             }); table.insert(Library.SpecificCorners, Corner)
         elseif SpecificCornersOnly == "no_top_left" then
             Corner = New("UICorner", {
                 TopLeftRadius = UDim.new(0, 0),
-                TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
-                BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
-                BottomLeftRadius = UDim.new(0, Library.CornerRadius / 2),
+                TopRightRadius = UDim.new(0, Library.CornerRadius),
+                BottomRightRadius = UDim.new(0, Library.CornerRadius),
+                BottomLeftRadius = UDim.new(0, Library.CornerRadius),
                 Parent = Menu,
             }); table.insert(Library.SpecificCorners, Corner)
         else
             Corner = New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = Menu,
             }); table.insert(Library.Corners, Corner)
         end
@@ -2482,7 +2482,7 @@ New("UIStroke", {
 table.insert(
     Library.Corners,
     New("UICorner", {
-        CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+            CornerRadius = UDim.new(0, Library.CornerRadius),
         Parent = TooltipLabel,
     })
 )
@@ -2877,10 +2877,10 @@ do
         })
 
         local PickerCorner = New("UICorner", {
-            TopLeftRadius = UDim.new(0, Library.CornerRadius / 2),
-            TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
-            BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
-            BottomLeftRadius = UDim.new(0, Library.CornerRadius / 2),
+            TopLeftRadius = UDim.new(0, Library.CornerRadius),
+            TopRightRadius = UDim.new(0, Library.CornerRadius),
+            BottomRightRadius = UDim.new(0, Library.CornerRadius),
+            BottomLeftRadius = UDim.new(0, Library.CornerRadius),
             Parent = Picker,
         }); table.insert(Library.SpecificCorners, PickerCorner)
 
@@ -2935,7 +2935,7 @@ do
             table.insert(
                 Library.Corners,
                 New("UICorner", {
-                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                    CornerRadius = UDim.new(0, Library.CornerRadius),
                     Parent = Checkbox,
                 })
             )
@@ -2998,8 +2998,8 @@ do
         local MenuTable = Library:AddContextMenu(Picker, UDim2.fromOffset(62, 0), function()
             return { Picker.AbsoluteSize.X + 1.5, 0.5 }
         end, 1, function(Active: boolean)
-            PickerCorner.TopRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
-            PickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
+            PickerCorner.TopRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
+            PickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
         end, false, if TotalModeButtons == 1 then "no_left" else "no_top_left")
         KeyPicker.Menu = MenuTable
 
@@ -3019,15 +3019,15 @@ do
             if Index == 1 and TotalModeButtons == 1 then
                 table.insert(Library.SpecificCorners, New("UICorner", {
                     TopLeftRadius = UDim.new(0, 0),
-                    TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                    TopRightRadius = UDim.new(0, Library.CornerRadius),
                     BottomLeftRadius = UDim.new(0, 0),
-                    BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                    BottomRightRadius = UDim.new(0, Library.CornerRadius),
                     Parent = Button,
                 }))
             elseif Index == 1 then
                 table.insert(Library.SpecificCorners, New("UICorner", {
                     TopLeftRadius = UDim.new(0, 0),
-                    TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                    TopRightRadius = UDim.new(0, Library.CornerRadius),
                     BottomLeftRadius = UDim.new(0, 0),
                     BottomRightRadius = UDim.new(0, 0),
                     Parent = Button,
@@ -3036,8 +3036,8 @@ do
                 table.insert(Library.SpecificCorners, New("UICorner", {
                     TopLeftRadius = UDim.new(0, 0),
                     TopRightRadius = UDim.new(0, 0),
-                    BottomLeftRadius = UDim.new(0, Library.CornerRadius / 2),
-                    BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
+                    BottomLeftRadius = UDim.new(0, Library.CornerRadius),
+                    BottomRightRadius = UDim.new(0, Library.CornerRadius),
                     Parent = Button,
                 }))
             end
@@ -3650,7 +3650,7 @@ do
         table.insert(
             Library.Corners,
             New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = HolderTransparency,
             })
         )
@@ -3663,8 +3663,8 @@ do
                 return { 0.5, Holder.AbsoluteSize.Y + 1.5 }
             end,
             1, function(Active: boolean)
-                ColorPickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
-                ColorPickerCorner.BottomLeftRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
+                ColorPickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
+                ColorPickerCorner.BottomLeftRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
             end, false, "no_top_left")
         ColorMenu.List.Padding = UDim.new(0, 8)
         ColorPicker.ColorMenu = ColorMenu
@@ -3809,7 +3809,7 @@ do
         table.insert(
             Library.Corners,
             New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = HueBox,
             })
         )
@@ -3831,7 +3831,7 @@ do
         table.insert(
             Library.Corners,
             New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = RgbBox,
             })
         )
@@ -3840,8 +3840,8 @@ do
         local ContextMenu = Library:AddContextMenu(Holder, UDim2.fromOffset(93, 0), function()
             return { Holder.AbsoluteSize.X + 1.5, 0.5 }
         end, 1, function(Active: boolean)
-            ColorPickerCorner.TopRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
-            ColorPickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
+            ColorPickerCorner.TopRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
+            ColorPickerCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
         end, false, "no_top_left")
         ColorPicker.ContextMenu = ContextMenu
         ContextMenu.List.Padding = UDim.new(0, 6)
@@ -8549,6 +8549,13 @@ function Library:CreateWindow(WindowInfo)
                 Visible = not IsCompact,
                 Parent = TabButton,
             })
+            table.insert(
+                Library.Corners,
+                New("UICorner", {
+                    CornerRadius = UDim.new(0, Library.CornerRadius),
+                    Parent = TabButton,
+                })
+            )
 
             if Icon then
                 TabIcon = New("ImageLabel", {
@@ -9599,6 +9606,13 @@ function Library:CreateWindow(WindowInfo)
                 Visible = not IsCompact,
                 Parent = TabButton,
             })
+            table.insert(
+                Library.Corners,
+                New("UICorner", {
+                    CornerRadius = UDim.new(0, Library.CornerRadius),
+                    Parent = TabButton,
+                })
+            )
 
             if Icon then
                 TabIcon = New("ImageLabel", {
@@ -9679,7 +9693,7 @@ function Library:CreateWindow(WindowInfo)
             table.insert(
                 Library.Corners,
                 New("UICorner", {
-                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                    CornerRadius = UDim.new(0, Library.CornerRadius),
                     Parent = Box,
                 })
             )
@@ -9700,7 +9714,7 @@ function Library:CreateWindow(WindowInfo)
             table.insert(
                 Library.Corners,
                 New("UICorner", {
-                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                    CornerRadius = UDim.new(0, Library.CornerRadius),
                     Parent = Button,
                 })
             )
@@ -10240,7 +10254,7 @@ function Library:CreateWindow(WindowInfo)
                 table.insert(
                     Library.Corners,
                     New("UICorner", { 
-                        CornerRadius = UDim.new(0, Library.CornerRadius), 
+                    CornerRadius = UDim.new(0, Library.CornerRadius), 
                         Parent = ProgressBar 
                     })
                 )
@@ -10764,6 +10778,7 @@ function Library:CreateLoading(LoadingInfo)
     })
     Library:AddOutline(SliderBar)
     table.insert(Library.Corners, New("UICorner", { CornerRadius = UDim.new(0, Library.CornerRadius / 2), Parent = SliderBar }))
+    table.insert(Library.Corners, New("UICorner", { CornerRadius = UDim.new(0, Library.CornerRadius), Parent = SliderBar }))
 
     local SliderFill = New("Frame", {
         BackgroundColor3 = "AccentColor",
@@ -10771,7 +10786,7 @@ function Library:CreateLoading(LoadingInfo)
         Size = UDim2.fromScale(0, 1),
         Parent = SliderBar,
     })
-    table.insert(Library.Corners, New("UICorner", { CornerRadius = UDim.new(0, Library.CornerRadius / 2), Parent = SliderFill }))
+    table.insert(Library.Corners, New("UICorner", { CornerRadius = UDim.new(0, Library.CornerRadius), Parent = SliderFill }))
 
     local ProgressLabel = New("TextLabel", {
         BackgroundTransparency = 1,
