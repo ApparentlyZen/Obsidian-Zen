@@ -2932,13 +2932,10 @@ do
                 SizeConstraint = Enum.SizeConstraint.RelativeYY,
                 Parent = Holder,
             })
-            table.insert(
-                Library.Corners,
-                New("UICorner", {
-                    CornerRadius = UDim.new(0, Library.CornerRadius / 2),
-                    Parent = Checkbox,
-                })
-            )
+            New("UICorner", {
+                CornerRadius = UDim.new(1, 0),
+                Parent = Checkbox,
+            })
             New("UIStroke", {
                 Color = "OutlineColor",
                 Parent = Checkbox,
@@ -4823,13 +4820,10 @@ do
             SizeConstraint = Enum.SizeConstraint.RelativeYY,
             Parent = Button,
         })
-        table.insert(
-            Library.Corners,
-            New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
-                Parent = Checkbox,
-            })
-        )
+        New("UICorner", {
+            CornerRadius = UDim.new(1, 0),
+            Parent = Checkbox,
+        })
 
         local CheckboxStroke = New("UIStroke", {
             Color = "OutlineColor",
@@ -5610,7 +5604,7 @@ do
         table.insert(
             Library.Corners,
             New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = Bar,
             })
         )
@@ -5618,7 +5612,7 @@ do
         table.insert(
             Library.Corners,
             New("UICorner", {
-                CornerRadius = UDim.new(0, Library.CornerRadius / 2),
+                CornerRadius = UDim.new(0, Library.CornerRadius),
                 Parent = Fill,
             })
         )
@@ -6004,10 +5998,10 @@ do
         })
 
         local DropdownCorner = New("UICorner", {
-            TopLeftRadius = UDim.new(0, Library.CornerRadius / 2),
-            TopRightRadius = UDim.new(0, Library.CornerRadius / 2),
-            BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
-            BottomLeftRadius = UDim.new(0, Library.CornerRadius / 2),
+            TopLeftRadius = UDim.new(0, Library.CornerRadius),
+            TopRightRadius = UDim.new(0, Library.CornerRadius),
+            BottomRightRadius = UDim.new(0, Library.CornerRadius),
+            BottomLeftRadius = UDim.new(0, Library.CornerRadius),
             Parent = DisplayContainer,
         }); table.insert(Library.SpecificCorners, DropdownCorner)
 
@@ -6101,8 +6095,8 @@ do
                     SearchBox.Visible = Active
                 end
 
-                DropdownCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
-                DropdownCorner.BottomLeftRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius / 2)
+                DropdownCorner.BottomRightRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
+                DropdownCorner.BottomLeftRadius = Active and UDim.new(0, 0) or UDim.new(0, Library.CornerRadius)
             end,
             false,
             "bottom"
@@ -6243,8 +6237,8 @@ do
                     local Corner = New("UICorner", {
                         TopLeftRadius = UDim.new(0, 0),
                         TopRightRadius = UDim.new(0, 0),
-                        BottomRightRadius = UDim.new(0, Library.CornerRadius / 2),
-                        BottomLeftRadius = UDim.new(0, Library.CornerRadius / 2),
+                        BottomRightRadius = UDim.new(0, Library.CornerRadius),
+                        BottomLeftRadius = UDim.new(0, Library.CornerRadius),
                         Parent = Container,
                     }); table.insert(Library.SpecificCorners, Corner)
                 end
@@ -7964,6 +7958,7 @@ function Library:CreateWindow(WindowInfo)
 
     local IsDefaultSearchbarSize = WindowInfo.SearchbarSize == UDim2.fromScale(1, 1)
     local MainFrame
+    local ToggleButton
     local DividerLine
     local TitleHolder
     local WindowTitle
@@ -10473,20 +10468,27 @@ function Library:CreateWindow(WindowInfo)
     end
 
     if Library.IsMobile then
-        local ToggleButton = Library:AddDraggableButton("Hide", function()
-            Library:Toggle()
-        end, true, true)
+        local DraggableButton = Library:AddDraggableImageButton({
+            Icon = WindowInfo.MobileIcon,
+            IconSize = 30,
+            Callback = function()
+                Library:Toggle()
+            end,
+            ExcludeScaling = true,
+            ExcludeDragging = true
+        })
+        ToggleButton = DraggableButton.Button
 
         if WindowInfo.MobileButtonsSide == "Right" then
-            ToggleButton.Button.AnchorPoint = Vector2.new(1, 0)
-            ToggleButton.Button.Position = UDim2.new(1, -6, 0, 6)
+            ToggleButton.AnchorPoint = Vector2.new(1, 0)
+            ToggleButton.Position = UDim2.new(1, -6, 0, 6)
         else
-            ToggleButton.Button.AnchorPoint = Vector2.new(0, 0)
-            ToggleButton.Button.Position = UDim2.fromOffset(6, 6)
+            ToggleButton.AnchorPoint = Vector2.new(0, 0)
+            ToggleButton.Position = UDim2.fromOffset(6, 6)
         end
 
         if WindowInfo.ShowMobileButtons == false then
-            ToggleButton.Button.Visible = false
+            ToggleButton.Visible = false
         end
     end
 
